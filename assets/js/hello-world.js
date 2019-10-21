@@ -1,9 +1,12 @@
 var botui = new BotUI('hello-world');
 
-var name = '';
+var nome = '';
 var email = '';
-var phone = '';
-
+var telefone = '';
+var clientes = '';
+var ticket = '';
+var profissionais = '';
+var folha = '';
 
 /*botui.message
   .add({
@@ -50,7 +53,7 @@ botui.message
     content: 'Olá! Meu nome é ZZZ, sou <strong>especialista em produtividade</strong> do Superlógica e estou aqui para te ajudar a diagnósticar a eficiência financeira do seu negócio! <br/><br/>Garanto que vai ser rápido e extremamente valioso para você analisar, mensurar e aprimorar todo o potencial de produtividade nos processos financeiros da sua empresa. <br/><br/>Antes de começarmos, vou te pedir alguns dados para que possamos prosseguir, tudo bem?'
   })
   .then(function () {
-    getName();
+    question2();
   });
 
 var getName = function () {
@@ -67,10 +70,10 @@ var getName = function () {
         }
       });
     }).then(function (res) {
-      name = res.value;
+      nome = res.value;
       botui.message.add({
         type: 'html',
-        content: 'Muito prazer, <strong>' + name + '</strong>! <br/><br/> Vou te fazer algumas perguntas e analisá-las. Ao final, te enviarei o diagnóstico completo por e-mail, ok?'
+        content: 'Muito prazer, <strong>' + nome + '</strong>! <br/><br/> Vou te fazer algumas perguntas e analisá-las. Ao final, te enviarei o diagnóstico completo por e-mail, ok?'
       });
       getEmail();
     });
@@ -80,19 +83,21 @@ var getEmail = function () {
   botui.message
     .add({
       delay: 1000,
-      content: 'E por falar nisso, qual é seu e-mail?'
+      type: 'html',
+      content: 'E por falar nisso, <strong>qual é seu e-mail</strong>?'
     })
     .then(function () {
       return botui.action.text({
         action: {
           sub_type: 'email',
-          placeholder: 'Escreva seu e-mail aqui'
+          placeholder: 'Escreva seu e-mail aqui...'
         }
       });
     }).then(function (res) {
       email = res.value;
       botui.message.add({
-        content: 'Muito obrigado, ' + name + '! <br/><br/> Agora já estamos prontos para começar. Vamos lá?'
+        type: 'html',
+        content: 'Muito obrigado, ' + nome + '! <br/><br/> Agora já estamos prontos para começar. Vamos lá?'
       })
         .then(function () {
           return botui.action.button({
@@ -154,7 +159,7 @@ var question2 = function () {
         delay: 1000,
         action: {
           multipleselect: true,
-          placeholder: 'Selecione a forma como você recebe de seus clientes',
+          placeholder: 'Selecione aqui...',
           options: [
             { value: "boleto", text: "Boleto bancário" },
             { value: "credito", text: "Cartão de crédito" },
@@ -251,8 +256,9 @@ var question5 = function () {
           placeholder: 'Digite aqui'
         }
       });
-    }).then(function () {
-question6();
+    }).then(function (res) {
+      clientes = res.value;
+      question6();
     });
 }
 
@@ -268,8 +274,9 @@ var question6 = function () {
           placeholder: 'Digite aqui'
         }
       });
-    }).then(function () {
-question7();
+    }).then(function (res) {
+      profissionais = res.value;
+      question7();
     });
 }
 
@@ -285,7 +292,8 @@ var question7 = function () {
           placeholder: 'Digite aqui'
         }
       });
-    }).then(function () {
+    }).then(function (res) {
+      folha = res.value;
       question8();
     });
 }
@@ -294,7 +302,7 @@ var question8 = function () {
   botui.message
     .add({
       delay: 1000,
-      content: 'Qual é seu ticket médio, ou seja, o valor médio que seus clientes pagam pra vc)'
+      content: 'Qual é seu ticket médio, ou seja, o valor médio que seus clientes pagam para você?'
     })
     .then(function () {
       return botui.action.text({
@@ -302,8 +310,20 @@ var question8 = function () {
           placeholder: 'Digite aqui'
         }
       });
-    }).then(function () {
-      askAddress();
+    }).then(function (res) {
+      ticket = res.value;
+
+      botui.message.add({
+        delay: 300,
+        type: 'html',
+        content: 'Nome:' + nome + '<br/>' + 'Email:' + email + '<br/>' + 'Telefone:' + telefone + '<br/>' + 'Clientes:' + clientes + '<br/>' + 'Ticket:' + ticket + '<br/>' + 'Profissionais:' + profissionais + '<br/>' + 'Folha:' + folha + '<br/>'
+      });
+
+
+      end();
+
+
+      //askAddress();
     });
 }
 
@@ -359,6 +379,6 @@ var end = function () {
   botui.message
     .bot({
       delay: 1000,
-      content: 'Thank you. Your package will shipped soon.'
+      content: 'Obrigado!'
     });
 }

@@ -408,13 +408,24 @@ button.botui-actions-buttons-button:not(:last-child) {
 
 .v-select li a { 
     padding-left: .95rem !important; 
+    background: #fff !important;
+    transition: color .2s;
+    -webkit-transition: color .2s;
 }
 
 .v-select li a:hover{
     color: #ff5d36 !important;
+    background: #fff !important;
 }
 
-.v-select .dropdown-menu>.highlight>a {
+.v-select .dropdown-menu>.highlight>a:hover{
     background: #fff !important;
     color:  #6f6f6f;
 }
+
+.v-select .dropdown-menu>.highlight>a{
+    background: #fff !important;
+    color: #ff5d36 !important;
+}
+
+.dropdown-menu {display: block;}
