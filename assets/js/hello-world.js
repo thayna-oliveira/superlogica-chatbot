@@ -169,7 +169,7 @@ var question2 = function () {
           ],
           button: {
             icon: 'check',
-            label: 'OK'
+            label: 'OK '
           }
         }
       })
